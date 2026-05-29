@@ -132,6 +132,13 @@ input::placeholder, textarea::placeholder { color: var(--muted); text-transform:
 .auth-card h1 { font-size: 16px; }
 .password-field { position: relative; }
 .password-field input { width: 100%; padding-right: 22px; }
+.password-field .password-input {
+  text-transform: none;
+  letter-spacing: normal;
+}
+.password-field .password-input::placeholder {
+  text-transform: none;
+}
 .password-toggle {
   position: absolute;
   top: 50%;

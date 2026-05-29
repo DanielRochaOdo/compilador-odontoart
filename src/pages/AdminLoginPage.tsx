@@ -44,6 +44,10 @@ export function AdminLoginPage() {
             placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            className="password-input"
             required
           />
           <button
