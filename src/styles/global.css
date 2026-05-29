@@ -98,13 +98,30 @@ input::placeholder, textarea::placeholder { color: var(--muted); text-transform:
 .danger-btn { background: var(--danger); color: #fff; }
 .icon-btn.favorite { color: #ff6b87; }
 
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: grid; place-items: center; padding: 8px; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(5, 12, 9, 0.62); display: grid; place-items: center; padding: 8px; }
+:root[data-theme='dark'] .modal-overlay { background: rgba(0, 0, 0, 0.72); }
 .modal { max-width: 260px; border-radius: 18px; padding: 9px; }
 .suggestion-modal {
   width: min(92vw, 640px);
   max-width: 640px;
   padding: 24px;
   border-radius: 24px;
+}
+.modal.glass,
+.suggestion-modal.glass {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.82), rgba(248, 255, 252, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 22px 48px rgba(9, 24, 17, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+:root[data-theme='dark'] .modal.glass,
+:root[data-theme='dark'] .suggestion-modal.glass {
+  background: linear-gradient(165deg, rgba(24, 30, 28, 0.92), rgba(16, 20, 19, 0.95));
+  border: 1px solid rgba(158, 221, 190, 0.3);
+  box-shadow:
+    0 24px 52px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 .suggestion-modal h2 { font-size: 24px; margin: 0 0 10px; }
 .suggestion-modal .field-label { font-size: 14px; }
