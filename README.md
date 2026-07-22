@@ -71,6 +71,17 @@ As migrations já configuram:
 - `VITE_SUPABASE_ANON_KEY`
 4. Deploy padrão (`npm run build`).
 
+## Keepalive do Supabase Free
+
+O workflow `.github/workflows/supabase-keepalive.yml` consulta diariamente a API REST do Supabase para evitar a pausa por inatividade do plano Free. A execução também pode ser disparada manualmente na aba **Actions** do GitHub.
+
+No repositório GitHub, cadastre em **Settings > Secrets and variables > Actions**:
+
+- `SUPABASE_URL`: URL do projeto, por exemplo `https://seu-projeto.supabase.co`
+- `SUPABASE_ANON_KEY`: chave pública `anon` do projeto
+
+Use somente a chave `anon` nesse workflow. Nunca coloque a chave `service_role` no repositório, no frontend ou em secrets usados por esse keepalive.
+
 ## Acesso admin
 
 - Botão discreto no topo direito da home.
