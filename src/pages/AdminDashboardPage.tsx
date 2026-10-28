@@ -41,10 +41,12 @@ function fromInputDate(value: string) {
 }
 
 export function AdminDashboardPage() {
+  const LINKS_PER_PAGE = 7;
   const SUGGESTIONS_PER_PAGE = 3;
   const navigate = useNavigate();
   const { signOut } = useAuth();
   const [links, setLinks] = useState<CatalogLink[]>([]);
+  const [linksPage, setLinksPage] = useState(1);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [suggestions, setSuggestions] = useState<UserSuggestion[]>([]);
   const [suggestionsPage, setSuggestionsPage] = useState(1);
@@ -60,6 +62,11 @@ export function AdminDashboardPage() {
   }, [iconQuery]);
 
   const totalSuggestionPages = Math.max(1, Math.ceil(suggestions.length / SUGGESTIONS_PER_PAGE));
+  const totalLinksPages = Math.max(1, Math.ceil(links.length / LINKS_PER_PAGE));
+  const pagedLinks = links.slice(
+    (linksPage - 1) * LINKS_PER_PAGE,
+    linksPage * LINKS_PER_PAGE,
+  );
   const pagedSuggestions = suggestions.slice(
     (suggestionsPage - 1) * SUGGESTIONS_PER_PAGE,
     suggestionsPage * SUGGESTIONS_PER_PAGE,
@@ -80,6 +87,10 @@ export function AdminDashboardPage() {
   useEffect(() => {
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (linksPage > totalLinksPages) setLinksPage(totalLinksPages);
+  }, [linksPage, totalLinksPages]);
 
   const saveLink = async (event: FormEvent) => {
     event.preventDefault();
@@ -219,7 +230,7 @@ export function AdminDashboardPage() {
           <div className="glass panel">
             <h2>Sistemas cadastrados</h2>
             <div className="table-list">
-              {links.map((link) => (
+              {pagedLinks.map((link) => (
                 <div className="table-row" key={link.id}>
                   <div>
                     <strong>{link.title}</strong>
@@ -241,6 +252,29 @@ export function AdminDashboardPage() {
                 </div>
               ))}
             </div>
+            {links.length > LINKS_PER_PAGE && (
+              <div className="pagination-row">
+                <button
+                  type="button"
+                  className="ghost-btn"
+                  onClick={() => setLinksPage((prev) => Math.max(1, prev - 1))}
+                  disabled={linksPage === 1}
+                >
+                  Anterior
+                </button>
+                <small>
+                  Página {linksPage} de {totalLinksPages}
+                </small>
+                <button
+                  type="button"
+                  className="ghost-btn"
+                  onClick={() => setLinksPage((prev) => Math.min(totalLinksPages, prev + 1))}
+                  disabled={linksPage === totalLinksPages}
+                >
+                  Próxima
+                </button>
+              </div>
+            )}
           </div>
 
           <form className="glass panel admin-form" onSubmit={saveAnnouncement}>
